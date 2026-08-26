@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChipIn",
-  description: "Chip in to support a cause.",
+  title: "Sub-Split",
+  description: "Pay on time"
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
