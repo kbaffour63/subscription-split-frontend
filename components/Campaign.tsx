@@ -24,6 +24,7 @@ const seedContributors: Contributor[] = [
 export default function Campaign() {
   const [contributors, setContributors] = useState<Contributor[]>(seedContributors);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [amount, setAmount] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
 
@@ -53,6 +54,7 @@ export default function Campaign() {
     ]);
     setShowModal(false);
     setName("");
+    setEmail("");
     setAmount("");
   }
 
@@ -104,6 +106,20 @@ export default function Campaign() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Anonymous"
+            className="rounded-lg border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-green-600 dark:border-zinc-700"
+          />
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          <span className="font-medium text-zinc-700 dark:text-zinc-300">
+            Email
+          </span>
+          <input
+            required
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
             className="rounded-lg border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-green-600 dark:border-zinc-700"
           />
         </label>
