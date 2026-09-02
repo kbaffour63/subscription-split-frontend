@@ -67,11 +67,6 @@ export default function Campaign() {
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
           The Squad&apos;s Spotify Split
         </h1>
-        <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-          We share one Spotify Premium plan between the {MEMBERS} of us. Chip
-          in your {currency.format(SHARE)} share every month so nobody has to
-          keep chasing everyone on WhatsApp.
-        </p>
       </div>
 
       <div className="flex flex-col gap-2">
