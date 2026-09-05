@@ -1,4 +1,4 @@
-import Campaign from "@/components/Campaign";
+import Campaign from "@/components/PaymentForm";
 
 export default function Home() {
   return <Campaign />;

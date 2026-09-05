@@ -36,10 +36,10 @@ export default function ContributorList({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <h2 className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">
+      <h2 className="text-sm font-semibold text-foreground">
         {contributors.length} contribution{contributors.length === 1 ? "" : "s"}
       </h2>
-      <ul className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
+      <ul className="flex flex-col divide-y divide-border">
         {contributors.map((c) => (
           <li key={c.id} className="flex items-center justify-between gap-4 py-3">
             <div className="flex items-center gap-3">
@@ -49,15 +49,11 @@ export default function ContributorList({
                 {c.name.trim().charAt(0).toUpperCase() || "?"}
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
-                  {c.name}
-                </span>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400">
-                  {timeAgo(c.timestamp)}
-                </span>
+                <span className="text-sm font-medium text-foreground">{c.name}</span>
+                <span className="text-xs text-muted-foreground">{timeAgo(c.timestamp)}</span>
               </div>
             </div>
-            <span className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">
+            <span className="text-sm font-semibold text-foreground">
               {currency.format(c.amount)}
             </span>
           </li>
