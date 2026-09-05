@@ -23,6 +23,7 @@ type PaymentCallbackProps = {
     amount?: number;
     channel?: string | null;
     paidAt?: string | null;
+    onRetry?: () => void;
 };
 
 const STATUS_CONTENT: Record<
@@ -63,11 +64,12 @@ const STATUS_CONTENT: Record<
 };
 
 export default function PaymentCallback({
-    status = "success",
-    reference = "TRX-8F3K2LQ9",
-    amount = 5000,
-    channel = "mobile_money",
-    paidAt = new Date().toISOString(),
+    status = "verifying",
+    reference,
+    amount,
+    channel,
+    paidAt,
+    onRetry,
 }: PaymentCallbackProps) {
     const { icon: Icon, iconClassName, title, description } = STATUS_CONTENT[status];
     const showDetails = status === "success";
@@ -92,10 +94,10 @@ export default function PaymentCallback({
 
             {showDetails && (
                 <div className="mx-6 mt-6 space-y-2.5 rounded-lg bg-muted/50 p-4">
-                    <DetailRow label="Amount" value={formatAmount(amount)} />
+                    {amount != null && <DetailRow label="Amount" value={formatAmount(amount)} />}
                     {channel && <DetailRow label="Method" value={formatChannel(channel)} />}
                     {paidAt && <DetailRow label="Date" value={formatDate(paidAt)} />}
-                    <ReferenceRow reference={reference} />
+                    {reference && <ReferenceRow reference={reference} />}
                 </div>
             )}
 
@@ -131,7 +133,7 @@ export default function PaymentCallback({
 
                 {status === "error" && (
                     <>
-                        <Button size="lg" className="w-full">
+                        <Button size="lg" className="w-full" onClick={onRetry}>
                             Check again
                         </Button>
                         <Link

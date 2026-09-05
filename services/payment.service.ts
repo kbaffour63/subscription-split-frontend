@@ -34,7 +34,9 @@ export const verifyPayment = async (
   reference: string,
 ): Promise<VerifyPaymentResponse> => {
   const { data } = await instance.get<VerifyPaymentResponse>(
-    `$/payment/verify/${encodeURIComponent(reference)}`,
+    `/payment/verify/${encodeURIComponent(reference)}`,
+    // verification round-trips to Paystack, so give it more room than the default
+    { timeout: 15000 },
   );
   return data;
 };
