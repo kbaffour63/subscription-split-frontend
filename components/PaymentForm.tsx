@@ -37,7 +37,6 @@ export default function PaymentForm() {
     defaultValues: PaymentFormDefaultValues,
     validators: {
       onChange: paymentSchema,
-      onBlur: paymentSchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -68,7 +67,7 @@ export default function PaymentForm() {
               <form.Field name="name">
                 {(field) => {
                   const invalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
+                    field.state.meta.isBlurred && !field.state.meta.isValid;
 
                   return (
                     <Field data-invalid={invalid || undefined}>
@@ -95,7 +94,7 @@ export default function PaymentForm() {
               <form.Field name="email">
                 {(field) => {
                   const invalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
+                    field.state.meta.isBlurred && !field.state.meta.isValid;
 
                   return (
                     <Field data-invalid={invalid || undefined}>
@@ -124,7 +123,7 @@ export default function PaymentForm() {
               <form.Field name="amount">
                 {(field) => {
                   const invalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
+                    field.state.meta.isBlurred && !field.state.meta.isValid;
 
                   return (
                     <Field data-invalid={invalid || undefined}>
@@ -167,11 +166,6 @@ export default function PaymentForm() {
                           </Button>
                         ))}
                       </ButtonGroup>
-
-                      <FieldDescription>
-                        One share is {currency.format(SHARE)}. Pay for more than one
-                        member if you like.
-                      </FieldDescription>
                       {invalid && <FieldError errors={field.state.meta.errors} />}
                     </Field>
                   );
