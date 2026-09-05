@@ -12,6 +12,7 @@
     "@base-ui/react": "^1.8.0",
     "@paystack/inline-js": "^2.24.0",
     "@tanstack/react-form-nextjs": "^1.33.5",
+    "@tanstack/react-query": "^5.102.8",
     "axios": "^1.20.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.2.5",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/paystack__inline-js": "^1.0.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

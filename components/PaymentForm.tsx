@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form-nextjs";
-
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +20,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { PaymentFormDefaultValues } from "@/lib/default-values";
 import { paymentSchema } from "@/lib/schema";
+import { isAxiosError } from "axios";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { initializePayment } from "@/services/payment.service";
+import { useRouter } from "next/navigation";
+
 
 const MEMBERS = 5;
 const SHARE = 12;
@@ -33,13 +38,47 @@ const currency = new Intl.NumberFormat("en-GH", {
 });
 
 export default function PaymentForm() {
+  const router = useRouter();
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  const { mutateAsync } = useMutation({
+    mutationFn: initializePayment,
+  });
+
   const form = useForm({
     defaultValues: PaymentFormDefaultValues,
-    validators: {
-      onChange: paymentSchema,
-    },
+    validators: { onChange: paymentSchema },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      setStatusMessage(null);
+
+      try {
+        const data = await mutateAsync(value);
+        const { default: PaystackPop } = await import("@paystack/inline-js");
+        const popup = new PaystackPop();
+
+        await new Promise<void>((resolve) => {
+          popup.resumeTransaction(data.accessCode, {
+            onSuccess: () => {
+              router.push(`/payment/callback?reference=${data.reference}`);
+              resolve();
+            },
+            onCancel: () => {
+              setStatusMessage("Payment cancelled.");
+              resolve();
+            },
+            onError: () => {
+              setStatusMessage("Something went wrong during payment.");
+              resolve();
+            },
+          });
+        });
+      } catch (error) {
+        setStatusMessage(
+          isAxiosError(error)
+            ? (error.response?.data?.message ?? "Could not start payment.")
+            : "Could not reach the server.",
+        );
+      }
     },
   });
 
